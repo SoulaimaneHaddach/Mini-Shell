@@ -58,13 +58,19 @@ int	main(void)
 
 		pid = fork();
 
-		if (pid == 0)
-		{
-			execve(command, args, NULL);
-			perror("execve");
-			free(command);
-			return (1);
-		}
+        if (pid == 0)
+        {
+            if (handle_redirection(args) != 0)
+            {
+                free(command);
+                return (1);
+            }
+
+            execve(command, args, NULL);
+            perror("execve");
+            free(command);
+            return (1);
+        }
 		else if (pid > 0)
 			waitpid(pid, NULL, 0);
 		else
