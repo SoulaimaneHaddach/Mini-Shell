@@ -47,7 +47,20 @@ char *find_command(char *command)
     free(path);
     return (NULL);
 }
+char *expand_variable(char *arg)
+{
+    char *value;
 
+    if (arg[0] != '$')
+        return (arg);
+
+    value = getenv(arg + 1);
+
+    if (value == NULL)
+        return ("");
+
+    return (value);
+}
 int main(void)
 {
     char input[1024];
@@ -81,11 +94,32 @@ int main(void)
         }
 
         args[i] = NULL;
+        int j;
+
+        j = 0;
+        while (args[j] != NULL)
+        {
+            args[j] = expand_variable(args[j]);
+            j++;
+        }   
+        if (strcmp(args[0], "cd") == 0)
+        {
+            if (args[1] == NULL)
+            {
+                printf("cd: missing argument\n");
+            }
+            else if (chdir(args[1]) != 0)
+            {
+                perror("cd");
+            }
+
+             continue;
+        }
         if (strcmp(args[0], "pwd") == 0)
         {
             char cwd[1024];
 
-            if(getcwd(cwd, sizeof(cwd)) != NULL)
+            if (getcwd(cwd, sizeof(cwd)) != NULL)
                 printf("%s\n", cwd);
             else
                 perror("getcwd");
