@@ -81,6 +81,16 @@ int main(void)
         }
 
         args[i] = NULL;
+        if (strcmp(args[0], "pwd") == 0)
+        {
+            char cwd[1024];
+
+            if(getcwd(cwd, sizeof(cwd)) != NULL)
+                printf("%s\n", cwd);
+            else
+                perror("getcwd");
+            continue;
+        }
         if (strcmp(args[0], "exit") == 0)
             break;
         command = find_command(args[0]);
