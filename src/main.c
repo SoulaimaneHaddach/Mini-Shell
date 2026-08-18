@@ -81,7 +81,8 @@ int main(void)
         }
 
         args[i] = NULL;
-        
+        if (strcmp(args[0], "exit") == 0)
+            break;
         command = find_command(args[0]);
 
         if (command == NULL)
