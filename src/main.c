@@ -6,7 +6,7 @@ int main(void)
 
     while (1)
     {
-        printf("mini-shell > ");
+        printf("solaymane-shell > ");
 
         if (fgets(input, sizeof(input), stdin) == NULL)
             break;
