@@ -8,7 +8,8 @@ INCLUDES = -Iinclude
 SRC = src/main.c \
       src/parser.c \
       src/builtins.c \
-      src/utils.c
+      src/utils.c \
+	  src/redirections.c
 
 OBJ = $(SRC:.c=.o)
 
